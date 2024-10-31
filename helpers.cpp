@@ -16,6 +16,8 @@ int readData(ifstream& ifile, string operations[], uint32_t operand1[], uint32_t
   return count;
 }
 
+//updating the flags if the operation calls for it, if not just setting the flag values back to zero
+
 void updateFlags(string operation, uint32_t result, bool isSigned){ 
     bool neg = 0;
     bool zero = (result == 0);
@@ -28,14 +30,14 @@ void updateFlags(string operation, uint32_t result, bool isSigned){
         }
         cout << "N: " << neg << " Z: " << zero << endl;
     }
-    else{
+    else{ //if not changing flags, go back to zero for both flag states
         cout << "N: 0 " << "Z: 0" << endl;
     }
 }
 
 void displayOperations(string operation, uint32_t operand1, uint32_t operand2, uint32_t result){ //different formatting for some operations 
     if(operation == "ASR" || operation == "ASRS" || operation == "LSR" || operation == "LSRS" || operation == "LSL" || operation == "LSLS"){
-        cout << operation << setw(6) << "0x" << hex << uppercase << operand1 << setw(6) << hex << uppercase << operand2 << ":" << setw(4);
+        cout << operation << setw(6) << "0x" << hex << uppercase << operand1 << setw(3) << hex << uppercase << operand2 << ":" << setw(4);
         cout << "0x" << result << endl;
     }
     else if(operation == "NOT" || operation == "NOTS"){
