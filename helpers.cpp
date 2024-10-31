@@ -16,23 +16,25 @@ int readData(ifstream& ifile, string operations[], uint32_t operand1[], uint32_t
   return count;
 }
 
-void updateFlags(string operation, uint32_t result){ 
+void updateFlags(string operation, uint32_t result, bool isSigned){ 
     bool neg = 0;
-    bool zero = 0;
+    bool zero = (result == 0);
     if(operation.back() == 'S'){
-        neg = (result & 0x80000000) != 0;
-        zero = (result == 0);
+        if(isSigned){
+            neg = (static_cast<int32_t>(result) < 0);
+        }
+        else{
+            neg = (result & 0x80000000) != 0;
+        }
         cout << "N: " << neg << " Z: " << zero << endl;
     }
     else{
-        cout << "N: " << neg << " Z: " << zero << endl;
+        cout << "N: 0 " << "Z: 0" << endl;
     }
 }
 
 void displayOperations(string operation, uint32_t operand1, uint32_t operand2, uint32_t result){ //different formatting for some operations 
     if(operation == "ASR" || operation == "ASRS" || operation == "LSR" || operation == "LSRS" || operation == "LSL" || operation == "LSLS"){
-       // int32_t signedOperand = static_cast<int32_t>(operand1);
-      //  int32_t signedResult = static_cast<int32_t>(result);
         cout << operation << setw(6) << "0x" << hex << uppercase << operand1 << setw(6) << hex << uppercase << operand2 << ":" << setw(4);
         cout << "0x" << result << endl;
     }
@@ -50,8 +52,9 @@ void displayOperations(string operation, uint32_t operand1, uint32_t operand2, u
 void runOperations(string operations[], uint32_t operand1[], uint32_t operand2[], int count){
     for(int i = 0; i < count; i++){
         uint32_t num = 0; //initializing result
-        //performing all of the operations 
-        if(operations[i] == "ADD" || operations[i] == "ADDS"){
+        bool isSigned = false;
+
+        if(operations[i] == "ADD" || operations[i] == "ADDS"){ //performing all the operations 
             num = operand1[i] + operand2[i];
         }
         else if(operations[i] == "AND" || operations[i] == "ANDS"){
@@ -61,6 +64,7 @@ void runOperations(string operations[], uint32_t operand1[], uint32_t operand2[]
             int32_t signedOperand = static_cast<int32_t>(operand1[i]); 
             int32_t signedNum = signedOperand >> operand2[i]; 
             num = signedNum; 
+            isSigned = true;
         }
         else if(operations[i] == "LSR" || operations[i] == "LSRS"){
             num = operand1[i] >> operand2[i];
@@ -72,7 +76,7 @@ void runOperations(string operations[], uint32_t operand1[], uint32_t operand2[]
             num = ~operand1[i]; 
         }
         else if(operations[i] == "ORR" || operations[i] == "ORRS"){
-            num = operand1[i] || operand2[i];
+            num = operand1[i] | operand2[i];
         }
         else if(operations[i] == "SUB" || operations[i] == "SUBS"){
             num = operand1[i] - operand2[i];
@@ -84,6 +88,6 @@ void runOperations(string operations[], uint32_t operand1[], uint32_t operand2[]
             cout << "invalid operation!" << endl;
         }
         displayOperations(operations[i], operand1[i], operand2[i], num); //displaying operation, operands, and result
-        updateFlags(operations[i], num); //updating and displaying flag values
+        updateFlags(operations[i], num, isSigned); //updating and displaying flag values
     }
 }
