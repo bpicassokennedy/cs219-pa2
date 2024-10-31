@@ -1,1 +1,11 @@
-# cs219-pa2
+# Machine Learning Simulator - Project 2 
+## Program Description 
+This project is a **machine learning simulator** that can perform various arithmetic operations. It reads from an input file (*programming-project-2.txt*) and performs the specified operation on the given hexadecimal operands (operand1, operand2) or just sole operand depending on the type of operation specified (ex. NOT). Following, the program then displays the requested operation, given operand(s), and result of the operation to the terminal. Additionally, this program also checks if the operation includes an "S" suffic to determine if the flags (N and Z) should be updated. If no update is required, the flags default to zero. 
+# How to Compile the Program 
+In order to compile the program, first make sure that the makefile and source files (main.cpp, helpers.cpp, helpers.h) are all in the same directory. Then run the make command in your terminal. This command will compile and create an executable named proj2. After successfull compilation you can run the program using **./proj2** where the requested operations will be presented in the terminal.
+# Code's Working Process 
+- **Read and Parse Input:** First, the program needs to read and parse the input given from the programming-project-2.txt file. To do so we check if the requested file is present in the directory and attempt to open the file from there. If there is no file, the program returns 1 to demonstrate an error. If there is no error returned, then the readData function is called. In readData, the file is parsed and split into operation, operand1, and operand2 then each stored respectively into their own arrays. The function then returns the number of lines in the file to be used in performing operations and loops later on.
+- **Performing Operations:**: Following, we then need to run the specified operation on the given operands. To do so, this program calls runOperations which determines which operation will be carried out checking the string stored in the operations array (looping through the entire array using the integer value returned from readData). 
+- **Updating Flags:** To update the flags, once the 
+- **Displaying Output:**
+# Result

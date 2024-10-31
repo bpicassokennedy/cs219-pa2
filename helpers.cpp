@@ -86,10 +86,12 @@ void runOperations(string operations[], uint32_t operand1[], uint32_t operand2[]
         else if(operations[i] == "XOR" || operations[i] == "XORS"){
             num = operand1[i] ^ operand2[i];
         }
-        else{
+        else{ //operation not supported
             cout << "invalid operation!" << endl;
         }
+
         displayOperations(operations[i], operand1[i], operand2[i], num); //displaying operation, operands, and result
         updateFlags(operations[i], num, isSigned); //updating and displaying flag values
+
     }
 }
