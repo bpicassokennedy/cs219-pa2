@@ -9,7 +9,7 @@
 #include "helpers.h"
 
 int main(){
-  ifstream inFile("programming-project-1.txt");
+  ifstream inFile("programming-project-2.txt");
   if(!inFile){
     cout << "error opening file!" << endl;
     return 1;
