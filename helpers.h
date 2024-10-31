@@ -13,5 +13,5 @@
 using namespace std;
 
 int readData(ifstream& ifile, string operations[], uint32_t operand1[], uint32_t operand2[], int max);
-void updateFlags(const string& operation, uint32_t result);
-void runOperations(string operations[], uint32_t operand1[], uint32_t operand2[], uint32_t results[], int count);
+void updateFlags(string operation, uint32_t result);
+void runOperations(string operations[], uint32_t operand1[], uint32_t operand2[], int count);
