@@ -22,10 +22,26 @@ void updateFlags(string operation, uint32_t result){
     if(operation.back() == 'S'){
         neg = (result & 0x80000000) != 0;
         zero = (result == 0);
-        cout << "N: " << neg << " Z: " << zero << endl << endl;
+        cout << "N: " << neg << " Z: " << zero << endl;
     }
     else{
-        cout << "N: " << neg << " Z: " << zero << endl << endl;
+        cout << "N: " << neg << " Z: " << zero << endl;
+    }
+}
+
+void displayOperations(string operation, uint32_t operand1, uint32_t operand2, uint32_t result){ //different formatting for some operations 
+    if(operation == "ASR" || operation == "ASRS" || operation == "LSR" || operation == "LSRS" || operation == "LSL" || operation == "LSLS"){
+       // int32_t signedOperand = static_cast<int32_t>(operand1);
+      //  int32_t signedResult = static_cast<int32_t>(result);
+        cout << operation << setw(6) << "0x" << hex << uppercase << operand1 << setw(6) << hex << uppercase << operand2 << ":" << setw(4);
+        cout << "0x" << result << endl;
+    }
+    else if(operation == "NOT" || operation == "NOTS"){
+        cout << operation << setw(6) << "0x" << hex << uppercase << operand1 << ":" << setw(4) << "0x" << result << endl; 
+    }
+    else{
+        cout << operation << setw(6) << "0x" << hex << uppercase << operand1 << setw(6) << "0x" << hex << uppercase << operand2 << ":" << setw(4);
+        cout << "0x" << hex << uppercase << result << " " << endl; //seperating operation and operands from results (just formatting preference)
     }
 }
 
@@ -33,9 +49,8 @@ void updateFlags(string operation, uint32_t result){
 
 void runOperations(string operations[], uint32_t operand1[], uint32_t operand2[], int count){
     for(int i = 0; i < count; i++){
-        uint32_t num = 0;
-        bool isSigned = false;
-        
+        uint32_t num = 0; //initializing result
+        //performing all of the operations 
         if(operations[i] == "ADD" || operations[i] == "ADDS"){
             num = operand1[i] + operand2[i];
         }
@@ -44,22 +59,17 @@ void runOperations(string operations[], uint32_t operand1[], uint32_t operand2[]
         }
         else if(operations[i] == "ASR" || operations[i] == "ASRS"){
             int32_t signedOperand = static_cast<int32_t>(operand1[i]); 
-            int32_t signedNum = signedOperand >> operand2[i];
-            cout << operations[i] << setw(6) << "0x" << hex << uppercase << operand1[i] << setw(6) << hex << uppercase << operand2[i] << ":" << setw(4);
-            cout << "0x" << signedNum << endl;
-            isSigned = true; 
+            int32_t signedNum = signedOperand >> operand2[i]; 
+            num = signedNum; 
         }
         else if(operations[i] == "LSR" || operations[i] == "LSRS"){
             num = operand1[i] >> operand2[i];
-            cout << operations[i] << setw(6) << "0x" << hex << uppercase << operand1[i] << setw(6) << hex << uppercase << operand2[i] << ":" << setw(4);
-            cout << "0x" << num << endl;
         }
         else if(operations[i] == "LSL" || operations[i] == "LSLS"){
-            num = operand1[i] << operand[2];
-
+            num = operand1[i] << operand2[i];
         }
         else if(operations[i] == "NOT" || operations[i] == "NOTS"){
-            num = ~operand1[i]; //need to fix output 
+            num = ~operand1[i]; 
         }
         else if(operations[i] == "ORR" || operations[i] == "ORRS"){
             num = operand1[i] || operand2[i];
@@ -73,8 +83,7 @@ void runOperations(string operations[], uint32_t operand1[], uint32_t operand2[]
         else{
             cout << "invalid operation!" << endl;
         }
-        // cout << operations[i] << setw(6) << "0x" << hex << uppercase << operand1[i] << setw(6) << "0x" << hex << uppercase << operand2[i] << ":" << setw(4);
-        // cout << "0x" << hex << uppercase << num << " " << endl; //seperating operation and operands from results (just formatting preference)
-        //updateFlags(operations[i], num);
+        displayOperations(operations[i], operand1[i], operand2[i], num); //displaying operation, operands, and result
+        updateFlags(operations[i], num); //updating and displaying flag values
     }
 }
