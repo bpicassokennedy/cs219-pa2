@@ -1,9 +1,9 @@
 // 
 //  Programmer: Bella Picasso-Kennedy 
-//  Date Completed: October 30, 2024
+//  Date Completed: October 31, 2024
 //  Version: 1.0 (CS219 Project 2)
-//  Brief Program Description: This program reads in a file of operations and operands, performs the operations, and outputs the results! However, the 
-//                             program can currently only perform unsigned addition, and detect if there is an unsigned overflow. Program has been written   //                             in consideration of future extension (implementation of additional operations).
+//  Brief Program Description: This program reads in a file of operations and operands, performs the operations, and outputs the results! The program is currently able to perform 
+//                             several arithmetic and logical operations, while also updating the status flags when and if called for. 
 //
 
 #include "helpers.h"
@@ -17,7 +17,7 @@ int main(){
   
     static const int maxCount = 50;
     string operations[maxCount];
-    uint32_t operand1[maxCount]; //will need to case to signed when and if needed
+    uint32_t operand1[maxCount]; //will need to cast to signed when and if needed
     uint32_t operand2[maxCount];
   
     int operationCount = readData(inFile, operations, operand1, operand2, maxCount);

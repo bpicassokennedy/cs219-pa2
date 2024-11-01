@@ -8,7 +8,7 @@
 #include <fstream>
 #include <string>
 #include <iomanip> //hex formatting 
-#include <cstdint> //uint32_t
+#include <cstdint> //uint32_t and int32_t
 
 using namespace std;
 

@@ -23,7 +23,7 @@ void updateFlags(string operation, uint32_t result, bool isSigned){
     bool zero = (result == 0);
     if(operation.back() == 'S'){
         if(isSigned){
-            neg = (static_cast<int32_t>(result) < 0);
+            neg = (static_cast<int32_t>(result) < 0); 
         }
         else{
             neg = (result & 0x80000000) != 0;
@@ -34,6 +34,8 @@ void updateFlags(string operation, uint32_t result, bool isSigned){
         cout << "N: 0 " << "Z: 0" << endl;
     }
 }
+
+//part of the output displayed to the terminal, operation, operand1, operand2 (depending), result, and the status flags
 
 void displayOperations(string operation, uint32_t operand1, uint32_t operand2, uint32_t result){ //different formatting for some operations 
     if(operation == "ASR" || operation == "ASRS" || operation == "LSR" || operation == "LSRS" || operation == "LSL" || operation == "LSLS"){
@@ -91,7 +93,7 @@ void runOperations(string operations[], uint32_t operand1[], uint32_t operand2[]
         }
 
         displayOperations(operations[i], operand1[i], operand2[i], num); //displaying operation, operands, and result
-        updateFlags(operations[i], num, isSigned); //updating and displaying flag values
+        updateFlags(operations[i], num, isSigned); //updating and displaying status flags
 
     }
 }
